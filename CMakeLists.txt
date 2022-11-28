@@ -17,8 +17,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-set(CMAKE_SYSROOT /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/build_dir/target-arm_cortex-a7_musl_eabi/fluent-bit-1)
-set(CMAKE_STAGING_PREFIX /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir)
+# set(CMAKE_SYSROOT /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/build_dir/target-arm_cortex-a7_musl_eabi/fluent-bit-1)
+# set(CMAKE_STAGING_PREFIX /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir)
 
 set(tools /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir/toolchain-arm_cortex-a7_gcc-5.5.0_musl_eabi)
 set(CMAKE_C_COMPILER ${tools}/bin/arm-openwrt-linux-muslgnueabi-gcc)
