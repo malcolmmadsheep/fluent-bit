@@ -14,81 +14,81 @@ set(FLB_VERSION_STR "${FLB_VERSION_MAJOR}.${FLB_VERSION_MINOR}.${FLB_VERSION_PAT
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR arm)
+# set(CMAKE_SYSTEM_NAME Linux)
+# set(CMAKE_SYSTEM_PROCESSOR arm)
 
-# set(CMAKE_SYSROOT /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/build_dir/target-arm_cortex-a7_musl_eabi/fluent-bit-1)
-# set(CMAKE_STAGING_PREFIX /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir)
+# # set(CMAKE_SYSROOT /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/build_dir/target-arm_cortex-a7_musl_eabi/fluent-bit-1)
+# # set(CMAKE_STAGING_PREFIX /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir)
 
-set(tools /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir/toolchain-arm_cortex-a7_gcc-5.5.0_musl_eabi)
-set(CMAKE_C_COMPILER ${tools}/bin/arm-openwrt-linux-muslgnueabi-gcc)
-set(CMAKE_CXX_COMPILER ${tools}/bin/arm-openwrt-linux-muslgnueabi-g++)
+# set(tools /home/vladyslavz/dev/github.com/openEPC/wlan-ap-private/openwrt/staging_dir/toolchain-arm_cortex-a7_gcc-5.5.0_musl_eabi)
+# set(CMAKE_C_COMPILER ${tools}/bin/arm-openwrt-linux-muslgnueabi-gcc)
+# set(CMAKE_CXX_COMPILER ${tools}/bin/arm-openwrt-linux-muslgnueabi-g++)
 
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-# # Define macro to identify Windows system (without Cygwin)
-# if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-#   set(FLB_SYSTEM_WINDOWS On)
-#   add_definitions(-DFLB_SYSTEM_WINDOWS)
-# endif()
+# Define macro to identify Windows system (without Cygwin)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+  set(FLB_SYSTEM_WINDOWS On)
+  add_definitions(-DFLB_SYSTEM_WINDOWS)
+endif()
 
-# # Define macro to identify macOS system
-# if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
-#   set(FLB_SYSTEM_MACOS On)
-#   add_definitions(-DFLB_SYSTEM_MACOS)
-# endif()
+# Define macro to identify macOS system
+if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+  set(FLB_SYSTEM_MACOS On)
+  add_definitions(-DFLB_SYSTEM_MACOS)
+endif()
 
-# # Define macro to identify Linux system
-# if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-#   set(FLB_SYSTEM_LINUX On)
-#   add_definitions(-DFLB_SYSTEM_LINUX)
-# endif()
+# Define macro to identify Linux system
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+  set(FLB_SYSTEM_LINUX On)
+  add_definitions(-DFLB_SYSTEM_LINUX)
+endif()
 
-# # Update CFLAGS
-# if (MSVC)
-#   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-#   add_definitions(-D_CRT_NONSTDC_NO_WARNINGS)
+# Update CFLAGS
+if (MSVC)
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_definitions(-D_CRT_NONSTDC_NO_WARNINGS)
 
-#   # Use custom CFLAGS for MSVC
-#   #
-#   #   /Zi ...... Generate pdb files.
-#   #   /MT ...... Static link C runtimes.
-#   #   /wd4711 .. C4711 (function selected for inline expansion)
-#   #   /wd4100 .. C4100 (unreferenced formal parameter)
-#   #   /wd5045 .. C5045 (Spectre mitigation)
-#   #
-#   set(CMAKE_C_FLAGS "/DWIN32 /D_WINDOWS /DNDEBUG /O2 /Zi /wd4100 /wd4711 /wd5045")
-#   set(CMAKE_EXE_LINKER_FLAGS "/Debug /INCREMENTAL:NO")
-#   set(CMAKE_BUILD_TYPE None)
+  # Use custom CFLAGS for MSVC
+  #
+  #   /Zi ...... Generate pdb files.
+  #   /MT ...... Static link C runtimes.
+  #   /wd4711 .. C4711 (function selected for inline expansion)
+  #   /wd4100 .. C4100 (unreferenced formal parameter)
+  #   /wd5045 .. C5045 (Spectre mitigation)
+  #
+  set(CMAKE_C_FLAGS "/DWIN32 /D_WINDOWS /DNDEBUG /O2 /Zi /wd4100 /wd4711 /wd5045")
+  set(CMAKE_EXE_LINKER_FLAGS "/Debug /INCREMENTAL:NO")
+  set(CMAKE_BUILD_TYPE None)
 
-#   # Use add_compile_options() to set /MT since Visual Studio
-#   # Generator does not notice /MT in CMAKE_C_FLAGS.
-#   add_compile_options(/MT)
-# else()
-#   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-# endif()
+  # Use add_compile_options() to set /MT since Visual Studio
+  # Generator does not notice /MT in CMAKE_C_FLAGS.
+  add_compile_options(/MT)
+else()
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+endif()
 
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FLB_FILENAME__=__FILE__")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FLB_FILENAME__=__FILE__")
 
-# if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "armv7l")
-#   set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -latomic")
-#   set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
-# endif()
-# if(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-#   set(FLB_SYSTEM_FREEBSD On)
-#   add_definitions(-DFLB_SYSTEM_FREEBSD)
-#   set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -lutil")
-#   set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -lutil")
-# endif()
+if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "armv7l")
+  set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -latomic")
+  set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
+endif()
+if(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+  set(FLB_SYSTEM_FREEBSD On)
+  add_definitions(-DFLB_SYSTEM_FREEBSD)
+  set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -lutil")
+  set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -lutil")
+endif()
 
-# # *BSD is not supported platform for wasm-micro-runtime. Now, we should be disabled for these platforms.
-# if(${CMAKE_SYSTEM_NAME} MATCHES "BSD")
-#   message(STATUS "This platform is not supported for WASM feature so disabled.")
-#   set(FLB_WASM OFF)
-# endif()
+# *BSD is not supported platform for wasm-micro-runtime. Now, we should be disabled for these platforms.
+if(${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+  message(STATUS "This platform is not supported for WASM feature so disabled.")
+  set(FLB_WASM OFF)
+endif()
 
 include(GNUInstallDirs)
 include(ExternalProject)
@@ -542,7 +542,7 @@ add_subdirectory(${FLB_PATH_LIB_CMETRICS} EXCLUDE_FROM_ALL)
 add_subdirectory(${FLB_PATH_LIB_CTRACES} EXCLUDE_FROM_ALL)
 
 # C-Ares (DNS library)
-FLB_OPTION(CARES_STATIC      ON)
+FLB_OPTION(CARES_STATIC      OFF)
 FLB_OPTION(CARES_SHARED      OFF)
 FLB_OPTION(CARES_INSTALL     OFF)
 FLB_OPTION(CARES_BUILD_TESTS OFF)
